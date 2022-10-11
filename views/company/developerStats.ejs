@@ -1,0 +1,141 @@
+<!-- navigation bar -->
+
+<header class="navbar navbar-dark sticky-top navbar-color flex-md-nowrap p-0 shadow">
+  
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <li class="nav-item dropdown btn user-dropdown" >
+    <a class="nav-link dropdown-toggle activeNavLink user-dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-user-circle-o"></i>
+        <span data-feather="home"></span>
+        <%= user.name %>
+      </a>
+    <div class="dropdown-menu dropdown-profile" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item dropdown-change" href="/company/profile">Profile</a>
+      <a class="dropdown-item" href="/company/logout">Logout</a>
+</li>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar-color sidebar collapse">
+      <div class="position-sticky pt-3 prasun">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+              <a class="nav-link " aria-current="page" href="/company/profile">
+                  <i class="fa fa-user"></i>
+                <span data-feather="home"></span>
+                PortFolio
+              </a>
+          </li>
+          <li class="nav-item ">
+              <a class="nav-link" aria-current="page" href="/company/dashboard">
+                <i class="fa fa-bar-chart"></i>
+                Timeline
+              </a>
+            </li>
+            <li class="nav-item current-page">
+              <a class="nav-link activeNavLink " href="/company/addPost">
+                  <i class="fa fa-bullhorn"></i>
+                  Add Post
+              </a>
+          </li>
+          <li class="nav-item ">
+              <a class="nav-link" href="/company/statistics">
+                  <i class="fa fa-bullhorn"></i>
+                  Statistics
+              </a>
+          </li>
+  
+          <li class="nav-item ">
+              <a class="nav-link" href="/company/assessment">
+                  <i class="fa fa-lightbulb-o"></i>
+                  Assessment
+              </a>
+          </li>
+          <li class="nav-item">
+              <a  class=" nav-link  " data-toggle="modal"  data-target="#notificationModal" class="nav-link" href="#">
+                  <i class="fa fa-calendar-check-o"></i>
+                  Notifications
+              </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+  
+  <!-- naviagation bar ends here -->
+  
+  <!-- include partial of notification -->
+  <%- include( "../partials/notifications" ) %>
+  
+  
+  <div class="fluid-container  portfolioBG col-md-9 ms-sm-auto col-lg-10 post-change">
+  <!-- <div class="fluid-container pt-3"> -->
+      <div class="container">
+        <h3 class="developerStatsHeading"><%= developer.name %></h3>
+        <p class="developerStatsSubHeading">Statistics</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope='col'>Job Name</th>
+              <th scope='col'>Job Type</th>
+              <th scope='col'>Company</th>
+              <th scope='col'>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 
+                if flag=1 Pending 
+                if flag=2 Accepted
+                if flag=-1 Rejected
+                and print only stats of those jobs which have flag!=0
+            -->
+            <% posts.forEach(function(post){ 
+    
+              
+              var flag=0;
+              post.appliedDev.forEach(function(email){
+                if(email==developer.email){flag=1;}
+              })
+              post.rejectedDev.forEach(function(email){
+                if(email==developer.email){
+                  flag=-1;
+                }
+              })
+    
+              if(flag==1){
+                if(post.isContinue=='NO'){
+                  flag=2;
+                }
+              }
+    
+              var status='';
+              if(flag==1)status='Pending';
+              if(flag==-1)status='Rejected';
+              if(flag==2)status='Accepted';
+    
+              if(flag!=0){ %> 
+    
+                <tr>
+                  <td class="tableData"><%= post.jobName %></td>
+                  <td class="tableData"><%= post.jobType %></td>
+                  <td class="tableData"><%= post.companyName %></td>
+                  <td class=<%= status %> ><%= status %></td>
+                </tr>
+    
+              <% } %>
+              
+            <% }) %>
+            
+          </tbody>
+          
+        </table>
+        
+      </div>
+  </div>
+  </div>
+</div>

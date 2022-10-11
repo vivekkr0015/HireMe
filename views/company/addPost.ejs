@@ -1,0 +1,165 @@
+<!-- ---------------------------------This is a view of add Post to timeline ----------------------------------->
+
+<!-- navigation bar -->
+
+
+<header class="navbar navbar-dark sticky-top navbar-color flex-md-nowrap p-0 shadow">
+  
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <li class="nav-item dropdown btn user-dropdown" >
+      <a class="nav-link dropdown-toggle activeNavLink user-dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle-o"></i>
+          <span data-feather="home"></span>
+          <%= user.name %>
+        </a>
+      <div class="dropdown-menu dropdown-profile" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item dropdown-change" href="/company/profile">Profile</a>
+        <a class="dropdown-item" href="/company/logout">Logout</a>
+  </li>
+  </header>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar-color sidebar collapse">
+        <div class="position-sticky pt-3 prasun">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/company/profile">
+                    <i class="fa fa-user"></i>
+                  <span data-feather="home"></span>
+                  PortFolio
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" aria-current="page" href="/company/dashboard">
+                  <i class="fa fa-bar-chart"></i>
+                  Timeline
+                </a>
+              </li>
+              <li class="nav-item current-page">
+                <a class="nav-link activeNavLink " href="/company/addPost">
+                    <i class="fa fa-bullhorn"></i>
+                    Add Post
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/company/statistics">
+                    <i class="fa fa-bullhorn"></i>
+                    Statistics
+                </a>
+            </li>
+    
+            <li class="nav-item ">
+                <a class="nav-link" href="/company/assessment">
+                    <i class="fa fa-lightbulb-o"></i>
+                    Assessment
+                </a>
+            </li>
+            <li class="nav-item">
+                <a  class=" nav-link  " data-toggle="modal"  data-target="#notificationModal" class="nav-link" href="#">
+                    <i class="fa fa-calendar-check-o"></i>
+                    Notifications
+                </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+<!-- naviagation bar ends here -->
+
+
+<!-- include partial of notification -->
+<%- include( "../partials/notifications" ) %>
+
+
+<!-- Upload a post for job -->
+<div class="fluid-container  portfolioBG col-md-9 ms-sm-auto col-lg-10 post-change"> 
+<!-- <div class="fluid-container d-flex justify-content-center mt-3 bg-wallpaper"> -->
+    <div class="addPostForm ">
+        <h1 class="heading-addPost">Post a Job </h1>
+
+        <!-- form of POST request sends to route of company to save in database-->
+        <form action='/company/addPost' method="POST">
+                
+            <div class="form-group d-flex justify-content-center">
+                <div class="input-group border-gradient border-gradient-purple">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                    <i class="fa fa-bookmark"></i>
+                    </div>
+                </div> 
+                <input name="jobName" placeholder="Job Name" type="jobName" class="form-control" required="required">
+                </div>
+            </div>
+
+            <div class="form-group d-flex justify-content-center">
+                <div class="input-group border-gradient border-gradient-purple">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                    <i class="fa fa-bookmark"></i>
+                    </div>
+                </div> 
+                <input name="jobRole" placeholder="Job Role" type="jobRole" class="form-control" required="required">
+                </div>
+            </div>
+
+            <div class="form-group d-flex justify-content-center">
+                <div class="input-group border-gradient border-gradient-purple">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                    <i class="fa fa-bookmark"></i>
+                    </div>
+                </div> 
+                <input name="skillsReq" placeholder="Skills Required" type="skillRequire" class="form-control" required="required">
+                </div>
+            </div>
+
+
+            <div class="form-group d-flex justify-content-center">
+                <div class="input-group border-gradient border-gradient-purple">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                        Job-Type
+                        </div>
+                    </div>
+
+                    <div class="custom-control custom-radio custom-control-inline ml-3" style="color:white">
+                        <input name="jobType" id="jobType_0" type="radio" class="custom-control-input" value="Internship" required="required"> 
+                        <label for="jobType_0" class="custom-control-label">Internship</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline" style="color:white">
+                        <input name="jobType" id="jobType_1" type="radio" class="custom-control-input" value="Full-time" required="required"> 
+                        <label for="jobType_1" class="custom-control-label">Full-time</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group d-flex justify-content-center">
+                <div class="input-group border-gradient border-gradient-purple">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                    <i class="fa fa-bookmark"></i>
+                    </div>
+                </div> 
+                <input name="expReq" placeholder="Experience Required" type="jobRole" class="form-control" required="required">
+                </div>
+            </div>
+
+                
+            <!-- submit button -->
+            <div class="form-group  d-flex justify-content-center">
+                <button id="addPostButton" name="submit" type="submit" class="btn btn-primary">Post</button>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+    </div>
+  </div>

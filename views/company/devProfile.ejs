@@ -1,0 +1,246 @@
+<!-- navigation bar -->
+<header class="navbar navbar-dark sticky-top navbar-color flex-md-nowrap p-0 shadow">
+  
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <li class="nav-item dropdown btn user-dropdown" >
+      <a class="nav-link dropdown-toggle activeNavLink user-dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle-o"></i>
+          <span data-feather="home"></span>
+          <%= user.name %>
+        </a>
+      <div class="dropdown-menu dropdown-profile" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item dropdown-change" href="/company/profile">Profile</a>
+        <a class="dropdown-item" href="/company/logout">Logout</a>
+  </li>
+  </header>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar-color sidebar collapse">
+        <div class="position-sticky pt-3 prasun">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/company/profile">
+                    <i class="fa fa-user"></i>
+                  <span data-feather="home"></span>
+                  PortFolio
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" aria-current="page" href="/company/dashboard">
+                  <i class="fa fa-bar-chart"></i>
+                  Timeline
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link activeNavLink " href="/company/addPost">
+                    <i class="fa fa-bullhorn"></i>
+                    Add Post
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link active" href="/company/statistics">
+                    <i class="fa fa-bullhorn"></i>
+                    Statistics
+                </a>
+            </li>
+    
+            <li class="nav-item ">
+                <a class="nav-link" href="/company/assessment">
+                    <i class="fa fa-lightbulb-o"></i>
+                    Assessment
+                </a>
+            </li>
+            <li class="nav-item">
+                <a  class=" nav-link  " data-toggle="modal"  data-target="#notificationModal" class="nav-link" href="#">
+                    <i class="fa fa-calendar-check-o"></i>
+                    Notifications
+                </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  <!---------- navigation bar ends here ------------>
+  
+  <!-- include partial of notification -->
+  <%- include( "../partials/notifications" ) %>
+  
+  
+  <!-- Developer's Profile starts from here -->
+  
+  <!-- CSS of portfolio (of developer and this devProfile have same CSS file) -->
+  <!-- Total 3 varibles recieved from route rendering : (i) developer,
+                                                       (ii) portfolio,
+                                                      (iii) user(company) 
+  -->
+  
+  <div class="fluid-container portfolioBG col-md-9 ms-sm-auto col-lg-10 post-change">
+    <div class="portfolioHeading">
+        <h1 class="bg-primary"><%= developer.name %></h1>
+        <h4 >DEVELOPER</h4>
+  
+  
+    </div>
+    
+    <form class="container portfolioForm">
+  
+          <div class="row">
+            <!-- Column for -> image + bio  -->
+            <div class="col-md-5 col-sm-12">
+                <div class="d-flex justify-content-center">
+                    <img  class="profilePhoto" src="<%= typeof portfolio.image !='undefined'? portfolio.image:'/images/avatar.png' %>" alt="Profile">
+                </div>
+                <div class="d-flex justify-content-center">
+
+                  <a  href="<%= typeof portfolio.pdf !='undefined'?portfolio.pdf  :'#' %>">Resume</a>
+              </div>
+                <!-- button to upload profile image -->
+                <!-- <div class=" d-flex justify-content-center mt-2">
+                   <input class=" btn btn-primary" type="file" name='image' value='' required>
+                </div> -->
+  
+                
+                <!-- email -->
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <div class="input-group" style="width:100%"> 
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              Email
+                            </div>
+                        </div>
+                        <input
+                            class="form-control"
+                            value="<%= typeof portfolio.email !='undefined'? portfolio.email:'NA' %>"
+                            readonly
+                        />
+                    </div>
+                </div>
+  
+                <!--bio  -->
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <div class="input-group" style="width:100%">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              Bio
+                            </div>
+                        </div>
+                        <input
+                            class="form-control"
+                            placeholder="<%= typeof portfolio.bio !='undefined'? portfolio.bio :'NA' %>"
+                            readonly
+                        ></input>
+                    </div>
+                </div>
+                
+            </div>
+  
+  
+            <!-- gap,front-end part -->
+            <div class="col-md-1"></div>
+  
+  
+            <!-- COlumn for other details -->
+            <div class="col-md-5 col-sm-12">
+  
+  
+                <!-- skills -->
+                <h4>Top skills :</h4>
+                
+                <div class="form-group  justify-content-center">
+                  <% portfolio.skills.forEach(function(skill){ %>
+                    <div class="input-group" style="width:100%">
+                      <input
+                          class="form-control"
+                          value="<%= typeof skill !='undefined'? skill :'NA' %>"
+                          readonly
+                      />
+                    </div>
+                  <% }) %>  
+                </div>
+  
+                
+                
+                <!-- years of exerience -->
+                <h4>Year of Experience :</h4>
+                <div class="form-group d-flex justify-content-center">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            Years
+                          </div>
+                      </div>
+                        <div class="input-group" style="width:90%">
+                          <input
+                              class="form-control"
+                              value="<%= typeof portfolio.experience !='undefined'? portfolio.experience :'NA' %>"
+                              readonly
+                          />
+                        </div>
+                </div>
+          
+  
+                <!-- college -->
+                <h4>College :</h4>
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        Education @
+                      </div>
+                    </div>
+                    <div class="input-group"  style="width:90%">
+                        <input
+                            class="form-control"
+                            value="<%= typeof portfolio.college !=undefined ? portfolio.college : 'NA' %> "
+                            readonly
+                        />
+                    </div>
+                </div>
+  
+  
+                <!-- degree -->
+                <h4>Degree :</h4>
+                <div class="form-group d-flex justify-content-center">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Degree
+                        </div>
+                    </div>
+                    <div class="input-group" style="width:90%">
+                      <input
+                          class="form-control"
+                          value="<%= portfolio.degree !='undefined'? portfolio.degree :'NA' %>"
+                          readonly
+                      />
+                    </div>
+                </div>
+                
+  
+                <!-- last job  -->
+                <h4>Last Job(if any) :</h4>
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <div class="input-group"  style="width:100%">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              Last Job
+                            </div>
+                        </div>
+                        <input
+                            class="form-control"
+                            value="<%= typeof portfolio.lastJob !='undefined'? portfolio.lastJob:'NA' %>"
+                            readonly
+                        />
+                    </div>
+                </div>
+  
+                
+            </div>
+          </div>
+    </form>
+  
+    
+  </div>
+    </div>
+  </div>

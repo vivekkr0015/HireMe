@@ -1,0 +1,135 @@
+<!-- navigation bar -->
+  <header class="navbar navbar-dark sticky-top navbar-color flex-md-nowrap p-0 shadow">
+  
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <li class="nav-item dropdown btn user-dropdown" >
+      <a class="nav-link dropdown-toggle activeNavLink " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle-o"></i>
+          <span data-feather="home"></span>
+          <%= user.name %>
+        </a>
+      <div class="dropdown-menu dropdown-profile" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item dropdown-change" href="/developer/portfolio">PortFolio</a>
+        <a class="dropdown-item" href="/developer/logout">Logout</a>
+  </li>
+  </header>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar-color sidebar collapse">
+        <div class="position-sticky pt-3 prasun">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/developer/portfolio">
+                    <i class="fa fa-user"></i>
+                  <span data-feather="home"></span>
+                  PortFolio
+                </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/developer/recommended">
+                <i class="fa fa-delicious"></i>
+                <span data-feather="home"></span>
+                Recommended
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/developer/dashboard">
+                <i class="fa fa-bullhorn"></i>
+            
+                <span data-feather="file"></span>
+                Job Posts
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="/developer/statistics">
+                <i class="fa fa-bar-chart"></i>
+                <span data-feather="shopping-cart"></span>
+                Statistics
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/developer/companies">
+                <i class="fa fa-group"></i>
+                <span data-feather="users"></span>
+                Companies
+              </a>
+            </li>
+            <li class="nav-item current-page">
+              <a class="nav-link " href="/developer/developersChat">
+                <i class="fa fa-wechat"></i>
+                <span data-feather="bar-chart-2"></span>
+                Dev-Chat
+              </a>
+            </li>
+            <li class="nav-item">
+              <a  class=" nav-link  " data-toggle="modal"  data-target="#notificationModal" class="nav-link" href="#">
+                <i class="fa fa-calendar-check-o"></i>
+                Notifications
+            </a>
+          </li>
+          </ul>
+        </div>
+      </nav>
+  
+  <!-- modal for notification section -->
+  <%- include( "../partials/notifications" ) %>
+  
+  <!------------------ navigation ends here --------------->
+  
+  <!-- chat box with side bar -->
+  <div class="fluid-container portfolioBG col-md-9 ms-sm-auto col-lg-10">
+  <div class="chat-container">
+      <!-- <header class="chat-header">
+        <h1><i class="fa fa-smile"></i>Jobspace's Chatroom</h1>
+        
+      </header> -->
+      <main class="chat-main chat-change">
+        <div class="chat-sidebar">
+          <h2>Why this chatroom?</h2>
+          <div class="">This chatroom is solely based on peer to peer architecture to help developers by other developers. Jobspace's chatroom aggregates all developers under single room to being vast community of developers.</div>
+          <br>
+          <h5 class="chatroom-quote">"Individually, we are one drop. Together, we are an ocean"</h5>
+          <div class="quoted-by">--Ryunosuke Satoro</div>
+        </div>
+        <div id="message-collection" class="chat-messages">
+  
+                  <!-- here comes all the messages -->
+                  <% messages.forEach(function(msg){ %>
+                      <div class="message">
+                          <p class="meta"><%= msg.senderName %> <br>
+                          <span><%= msg.sendingTime %></span></p>
+                          <p class="text"><%= msg.senderMsg %></p>
+                      </div>
+                  <% }) %>
+                      
+        </div>
+      </main>
+      <div class="chat-form-container">
+          <div class="chat-form">
+  
+            <!-- input field to write message -->
+              <input
+                  id="msg"
+                  type="text"
+                  placeholder="Enter Message"
+                  required
+                  autocomplete="off"
+              />
+              <button id="sendMsgButton" onclick="appendNewMsg('<%= user.name %>')" class="btn btn-dark"><i class="fa fa-paper-plane"></i> Send</button>
+          </div>
+          
+       
+      </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  
+  <!-- javascripts file -->
+  <script src="/js/chat.js"></script>

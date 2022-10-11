@@ -1,0 +1,155 @@
+<!---------------------------------------- Contains list of companies to subscribe----------------------------- -->
+
+<!-- navigation bar -->
+
+<header class="navbar navbar-dark sticky-top navbar-color flex-md-nowrap p-0 shadow">
+  
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <li class="nav-item dropdown btn user-dropdown" >
+      <a class="nav-link dropdown-toggle activeNavLink " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle-o"></i>
+          <span data-feather="home"></span>
+          <%= user.name %>
+        </a>
+      <div class="dropdown-menu dropdown-profile" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item dropdown-change" href="/developer/portfolio">PortFolio</a>
+        <a class="dropdown-item" href="/developer/logout">Logout</a>
+  </li>
+  </header>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar-color sidebar collapse">
+        <div class="position-sticky pt-3 prasun">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/developer/portfolio">
+                    <i class="fa fa-user"></i>
+                  <span data-feather="home"></span>
+                  PortFolio
+                </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/developer/recommended">
+                <i class="fa fa-delicious"></i>
+                <span data-feather="home"></span>
+                Recommended
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/developer/dashboard">
+                <i class="fa fa-bullhorn"></i>
+            
+                <span data-feather="file"></span>
+                Job Posts
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="/developer/statistics">
+                <i class="fa fa-bar-chart"></i>
+                <span data-feather="shopping-cart"></span>
+                Statistics
+              </a>
+            </li>
+            <li class="nav-item current-page">
+              <a class="nav-link " href="/developer/companies">
+                <i class="fa fa-group"></i>
+                <span data-feather="users"></span>
+                Companies
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/developer/developersChat">
+                <i class="fa fa-wechat"></i>
+                <span data-feather="bar-chart-2"></span>
+                Dev-Chat
+              </a>
+            </li>
+            <li class="nav-item">
+                <a  class=" nav-link  " data-toggle="modal"  data-target="#notificationModal" class="nav-link" href="#">
+                    <i class="fa fa-calendar-check-o"></i>
+                    Notifications
+                </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+<!-- navigation bar ends here -->
+
+<!-- modal for notification section -->
+<%- include( "../partials/notifications" ) %>
+
+
+<!-- form used to search companies profile -->
+<div class="fluid-container portfolioBG col-md-9 ms-sm-auto col-lg-10 company-color">  
+<div class="container searchSection border-gradient border-gradient-purple">
+    <h3>Search Company Profile</h3>
+    <form action="/developer/searchCompany" method='POST'>
+        <div class="input-group p-3">
+        <input name='companyName' class="form-control searchInputTag" type="text" id="searchName" placeholder="Type a company name here...">
+        <button type='submit' id='searchButton' class="btn btn-light ml-2"><i class="fa fa-paper-plane"></i> Search</button>
+        </div>
+        
+    </form>
+</div>
+
+<div class="container companiesName">
+    
+
+
+    <div class="container p-2 " style="margin-left: -20px;">
+        <div class="row">
+
+            <!-- companies is array of company objects of 'Company Schema'-->
+            <% companies.forEach(function(company){ %>
+                
+                <div class="col-md-4 col-sm-6 col-xs-12 mt-3">
+                    <div id="<%= company.name %>" class="card custom-card-subscription border-gradient border-gradient-purple" style="width: 18rem;">
+                        <div class="card-body">
+                        <h5 class="card-title cardCompanyName"><%= company.name %></h5>
+                        <p class="card-text cardCompanyEmail"><%= company.email %></p>
+                        <p class="card-text cardCompanyCountry"><%= company.country %></p>
+                        <!-- Check whether developer already subscribed or not -->
+                        <% 
+                        flag=1;
+                            user.subscribed.forEach(function(emailID){
+                                if(emailID==company.email){
+                                    flag=-1;
+                                }
+                            })
+                        if(flag==-1){ %> 
+                                <button class="subscribedButton btn btn-danger" >Subscribed <i class="fa fa-bell"></i></button>
+                        <% } 
+                        else { %>
+                                <button classs="subscribeButton" id="subscribe/<%= company.email %>" onclick="subscribeFunction('<%= company.email %>')" class="btn btn-primary"  >Subscribe <i class="fa fa-bell"></i></button>
+                            <% } %>
+                        </div>
+                    </div>
+        
+                </div>
+                
+            %>
+                
+            <% }) %>
+            
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+  </div>
+
+
+
+<!-- on click function for subscribe button  -->
+<script src="/js/subscribe.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/searchAutocomplete.js"></script>

@@ -1,0 +1,154 @@
+<!-- ----------------------This view render when company login,here all the posts are present which company posted--------------- -->
+
+<!-- navigation bar -->
+<header class="navbar navbar-dark sticky-top navbar-color flex-md-nowrap p-0 shadow">
+  
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <li class="nav-item dropdown btn user-dropdown" >
+      <a class="nav-link dropdown-toggle activeNavLink user-dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle-o"></i>
+          <span data-feather="home"></span>
+          <%= user.name %>
+        </a>
+      <div class="dropdown-menu dropdown-profile" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item dropdown-change" href="/company/profile">Profile</a>
+        <a class="dropdown-item" href="/company/logout">Logout</a>
+  </li>
+  </header>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar-color sidebar collapse">
+        <div class="position-sticky pt-3 prasun">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/company/profile">
+                    <i class="fa fa-user"></i>
+                  <span data-feather="home"></span>
+                  PortFolio
+                </a>
+            </li>
+            <li class="nav-item current-page">
+                <a class="nav-link" aria-current="page" href="/company/dashboard">
+                  <i class="fa fa-bar-chart"></i>
+                  Timeline
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link activeNavLink" href="/company/addPost">
+                    <i class="fa fa-bullhorn"></i>
+                    Add Post
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/company/statistics">
+                    <i class="fa fa-bullhorn"></i>
+                    Statistics
+                </a>
+            </li>
+    
+            <li class="nav-item ">
+                <a class="nav-link" href="/company/assessment">
+                    <i class="fa fa-lightbulb-o"></i>
+                    Assessment
+                </a>
+            </li>
+            <li class="nav-item">
+                <a  class=" nav-link  " data-toggle="modal"  data-target="#notificationModal" class="nav-link" href="#">
+                    <i class="fa fa-calendar-check-o"></i>
+                    Notifications
+                </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+  
+  <!---------- navigation bar ends here ------------>
+  
+  <!-- include partial of notification -->
+  <%- include( "../partials/notifications" ) %>
+  
+  
+  <!-- 
+       iterate to all properties of post object 
+       which are posted by company
+  -->
+  <div class="fluid-container portfolioBG col-md-9 ms-sm-auto col-lg-10 post-change"> 
+  <div class="postTimeline">
+  
+    <!-- if company doesn't post any job -->
+    <% if(posts.length==0) { %>
+      <div style="height:76vh">
+        <div class="form-group d-flex justify-content-center" style="padding-bottom: 0%; padding-top: 15%;">
+          <div class="alert alert-primary fade show " role="alert" style="width: 70%;">
+                <h3>You haven't posted any job yet. Click <a href="/company/addPost">here</a> to post</h3>
+          </div>
+        </div>
+      </div>
+    <% } 
+    <!-- otherwise shows posts -->
+    
+    <!-- Reversing the Posts,so that latest one will be on top in dashboard(timeline) -->
+    else { %>  
+      
+      <%
+        
+        var Posts=[];
+        Posts=posts;
+        Posts.reverse();
+        Posts.forEach((post)=>{ 
+          if(post.isContinue=='YES'){ %> 
+            <div class="container justify-content-center postbox">
+          
+              <div class="container jobName">
+                <h2> <%= post.jobName %> </h2>
+              </div>
+      
+              <div class="container jobType">
+                <h4> <%= post.jobType %> </h4>
+              </div>
+      
+              <div class="container companyName">
+                <h3> <%= post.companyName %></h3>
+              </div>
+      
+              <div class="container jobRole mb-2">
+                <button class="btn-danger">Job Role </button>
+                <h5  class="ml-3"> <%= post.jobRole %></h5>
+              </div>
+      
+              <div class="container skillsReq  mb-2">
+                <button class="btn-danger">Skills</button>
+                <h5 class="ml-3"> <%= post.skillsReq %></h5>
+              </div>
+      
+              <div class="container experience  mb-2">
+                <button class="btn-danger">Experience</button>
+                <h5 class="ml-3"> <%= post.expReq %></h6>
+              </div>
+      
+              <div class="container applied">
+                <button class="btn-info">DevOps Applied</button>
+                <h5 class="ml-3"> <%= post.appliedDev.length %> </h5>
+              </div>    
+      
+              <div class="container postTime">
+                <p>Posted at : <%= post.date %> </p>
+              </div>
+              
+            </div>
+          <% } %> 
+        
+      <% }) %>
+      
+    <% } %>
+  </div>
+  </div>
+    </div>
+  </div>
+  

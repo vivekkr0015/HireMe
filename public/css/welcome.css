@@ -1,0 +1,70 @@
+/* to all paragraph */
+p{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.card{
+    background-color: transparent;
+}
+.brand-color{
+    color: white;
+}
+.welcome-border{
+    border-right: 1.5px solid white;
+  }
+  .navbar-column:hover{
+    background-color: #4f4d4d;
+  }
+  .navbar-column{
+    padding: 0 20px;
+  }
+.custom-card{
+    border-left-width: 3px;
+    border-bottom-width: 3px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-color: #007bff;
+}
+.welcome-navbar{
+    margin-right: 15px;
+}
+/* .bg-home{
+    background-image: url('../images/jobpost.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:450px;
+    width: 100%;
+    
+} */
+.section-2
+{
+    padding:5% 0%;
+    background-color: #d3e8f391;
+}
+
+.welcome-image-cartoon{
+    width: 315px;
+}
+
+.btn{
+    border-radius: 0%;
+}
+
+.footer-bar
+{
+    background-color:#444546;
+  
+    color:#f0f0f0;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    padding: 0% 2%;
+} 
+.officeAddress{
+    text-align:justify;
+}
+.forDevelopers{
+    text-align: justify;
+}
+.forCompany{
+    text-align: justify;
+}

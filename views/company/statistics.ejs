@@ -1,0 +1,148 @@
+<!-- navigation bar -->
+
+  <header class="navbar navbar-dark sticky-top navbar-color flex-md-nowrap p-0 shadow">
+  
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <li class="nav-item dropdown btn user-dropdown" >
+      <a class="nav-link dropdown-toggle activeNavLink user-dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle-o"></i>
+          <span data-feather="home"></span>
+          <%= user.name %>
+        </a>
+      <div class="dropdown-menu dropdown-profile" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item dropdown-change" href="/company/profile">Profile</a>
+        <a class="dropdown-item" href="/company/logout">Logout</a>
+  </li>
+  </header>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar-color sidebar collapse">
+        <div class="position-sticky pt-3 prasun">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/company/profile">
+                    <i class="fa fa-user"></i>
+                  <span data-feather="home"></span>
+                  PortFolio
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" aria-current="page" href="/company/dashboard">
+                  <i class="fa fa-bar-chart"></i>
+                  Timeline
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link activeNavLink " href="/company/addPost">
+                    <i class="fa fa-bullhorn"></i>
+                    Add Post
+                </a>
+            </li>
+            <li class="nav-item current-page">
+                <a class="nav-link " href="/company/statistics">
+                    <i class="fa fa-bullhorn"></i>
+                    Statistics
+                </a>
+            </li>
+    
+            <li class="nav-item ">
+                <a class="nav-link" href="/company/assessment">
+                    <i class="fa fa-lightbulb-o"></i>
+                    Assessment
+                </a>
+            </li>
+            <li class="nav-item">
+                <a  class=" nav-link  " data-toggle="modal"  data-target="#notificationModal" class="nav-link" href="#">
+                    <i class="fa fa-calendar-check-o"></i>
+                    Notifications
+                </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
+  <!-- naviagation bar ends here -->
+  
+  <!-- include partial of notification -->
+  <%- include( "../partials/notifications" ) %>
+  
+  
+  <!-- statistics section start from here -->
+  
+  <!-- 'posts' array of post object recieved  -->
+  <div class="fluid-container portfolioBG col-md-9 ms-sm-auto col-lg-10 post-change"> 
+  <div class="fluid-container stats-bg mt-3">
+    <h3 class="assessment-heading">Post Statistics</h3>
+    <p class="assessment-subheading">Click on 'Done' the post by filtering(selection/rejection) of developers and then go to assessment section for tests/quizzes to assess developers</p>
+  <div class="container">
+    <div id="accordion">
+  
+        <!--Iterate through all the post object,to show stats of all(who have applied) -->
+        <% posts.forEach(function(post){
+              if(post.isContinue=='YES'){ %>
+                
+                <div class="card mt-3 mb-3 bg-light"  id="postDone/<%= post._id %>">
+                  <div class="card-header ">
+                    <div class="d-inline companyStats"><%= post.jobName %></div> 
+                    <div class="d-inline d-flex flex-row-reverse">
+                      <button class="btn btn-success" onclick="postDoneFunction('<%= post._id %>')">Done</button>
+                    </div>      
+                  </div>
+    
+                  <!-- 'appliedDev' contains email of all developer,so send them to route so 
+                       company can check their portfolio
+                  -->
+                  <% if(post.appliedDev.length==0){ %> 
+                    <div class="container p-2"><h5>No one applied yet !!</h5></div>
+                    <% } 
+                    else 
+                        {
+                          post.appliedDev.forEach(function(email){ 
+                            var developer=developers.find(developer=>{return developer.email===email})
+                          %>
+                                <div class="card-body row">
+                                  <div class="ml-1 col">
+                                    <form action="/company/devProfile" method="POST">
+                                      <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= developer.name %></button>
+                                    </form>
+                                  </div>
+                                  <div class="ml-1 col">
+                                    <form action="/company/developerStats" method="POST">
+                                      <button class="btn btn-primary" id="developerStats/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>">Check Stats</button>
+                                    </form>
+                                  </div>
+                                  <% 
+                                    var priorityScore=developer.hiddenScore; 
+                                  %>
+                                  <div class="ml-1 col">
+                                    <button class="btn btn-dark" id="priorityScore/<%= post._id %>/<%= email %>">Priority Score: <%= priorityScore %></button>
+                                  </div>
+      
+                                  <div class="col col-md-6 col-xs-12 justify-content-right"> 
+                                    <button class="btn btn-danger" id="decline/<%= post._id %>/<%= email %>" onclick="declineFunction('<%= post._id %>/<%= email %>')" value="<%= email %>">
+                                      <i class="fa fa-minus-circle"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                          
+                  <% }) } %>
+                  
+              </div>
+             <% } %>
+        <% }) %>
+    
+    </div>
+  </div>
+  </div>
+  </div>
+    </div>
+  </div>
+  
+  <!-- decline Javascript file -->
+  <script src="/js/decline.js"></script>
+  <script src="/js/postDone.js"></script>

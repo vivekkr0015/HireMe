@@ -1,0 +1,149 @@
+<!-- -----------------------------Show stats of developers -->
+<!-- navigation bar -->
+<header class="navbar navbar-dark sticky-top navbar-color flex-md-nowrap p-0 shadow">
+  
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <li class="nav-item dropdown btn  user-dropdown" >
+      <a class="nav-link dropdown-toggle activeNavLink" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user-circle-o"></i>
+          <span data-feather="home"></span>
+          <%= user.name %>
+        </a>
+      <div class="dropdown-menu dropdown-profile" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item dropdown-change" href="/developer/portfolio">PortFolio</a>
+        <a class="dropdown-item" href="/developer/logout">Logout</a>
+  </li>
+  </header>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar-color sidebar collapse">
+        <div class="position-sticky pt-3 prasun">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/developer/portfolio">
+                    <i class="fa fa-user"></i>
+                  <span data-feather="home"></span>
+                  PortFolio
+                </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/developer/recommended">
+                <i class="fa fa-delicious"></i>
+                <span data-feather="home"></span>
+                Recommended
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/developer/dashboard">
+                <i class="fa fa-bullhorn"></i>
+            
+                <span data-feather="file"></span>
+                Job Posts
+              </a>
+            </li>
+            <li class="nav-item current-page">
+              <a class="nav-link" href="/developer/statistics">
+                <i class="fa fa-bar-chart"></i>
+                <span data-feather="shopping-cart"></span>
+                Statistics
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/developer/companies">
+                <i class="fa fa-group"></i>
+                <span data-feather="users"></span>
+                Companies
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/developer/developersChat">
+                <i class="fa fa-wechat"></i>
+                <span data-feather="bar-chart-2"></span>
+                Dev-Chat
+              </a>
+            </li>
+            <li class="nav-item">
+              <a  class=" nav-link  " data-toggle="modal"  data-target="#notificationModal" class="nav-link" href="#">
+                <i class="fa fa-calendar-check-o"></i>
+                Notifications
+            </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
+  <!-- modal for notification section -->
+  <%- include( "../partials/notifications" ) %>
+  
+  <!-- -----------navigation bar ends here -------------->
+  
+  <div class="fluid-container portfolioBG col-md-9 ms-sm-auto col-lg-10">
+    <div class="container">
+      <h3 class="developerStatsHeading"><%= user.name %></h3>
+      <p class="developerStatsSubHeading">Statistics</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope='col'>Job Name</th>
+            <th scope='col'>Job Type</th>
+            <th scope='col'>Company</th>
+            <th scope='col'>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 
+              if flag=1 Pending 
+              if flag=2 Accepted
+              if flag=-1 Rejected
+              and print only stats of those jobs which have flag!=0
+          -->
+          <% 
+          var countsOfNotApplied=0;
+            posts.forEach(function(post){ 
+            
+            var flag=0;
+            post.appliedDev.forEach(function(email){
+              if(email==user.email){flag=1;}
+            })
+            post.rejectedDev.forEach(function(email){
+              if(email==user.email){
+                flag=-1;
+              }
+            })
+            if(flag==1){
+              if(post.isContinue=='NO'){
+                flag=2;
+              }
+            }
+            var status='';
+            if(flag==1)status='Pending';
+            if(flag==-1)status='Rejected';
+            if(flag==2)status='Accepted';
+            if(flag!=0){ %> 
+              <tr>
+                <td class="tableData"><%= post.jobName %></td>
+                <td class="tableData"><%= post.jobType %></td>
+                <td class="tableData"><%= post.companyName %></td>
+                <td class=<%= status %> ><%= status %></td>
+              </tr>
+            <% } else{ countsOfNotApplied++; } %>
+            
+            <% }) 
+                if(posts.length==countsOfNotApplied){ %> 
+                  <p>You haven't applied to any job yet ! </p> 
+                <% }
+            %>
+          
+        </tbody>
+        
+      </table>
+      
+    </div>
+  </div>
+    </div>
+    </div>

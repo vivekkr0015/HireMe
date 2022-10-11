@@ -1,0 +1,33 @@
+
+.portfolioBG{
+    margin: 0;
+    padding: 0;
+    /* background-image: url('../images/candy_back.jpg'); */
+    /* background-attachment: fixed; */
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+  }
+  .portfolioHeading{
+    padding:0.5% 0%;
+    text-align: center;
+    /* background-color: #007bffab;  */
+    
+  }
+  .portfolioHeading h1{
+    font-weight: 350;
+    color:white;
+  }
+  .portfolioForm{
+    background-color: #f2f2f2e7;
+    -webkit-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
+    -moz-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
+    box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
+    padding:3% 5%;
+    margin-bottom: 5%;
+  }
+  .profilePhoto{
+    width:200px;
+    height: 200px;
+    border-radius: 50%;
+  }

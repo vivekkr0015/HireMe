@@ -1,0 +1,48 @@
+.loginSection{  
+    width: 70%;
+    margin: auto;
+    margin-top: 10px;
+    background-color: white;
+    
+}
+
+
+.heading-login{
+    color:#a1a1a1;
+    text-align: center;
+    font-weight: 900;
+    padding-top: 1%;
+}
+
+.subHeading{
+    /* padding-top: 1%; */
+    text-align: center;
+    font-weight: 700;
+    font-size: x-large;
+    color:#007bff;
+}
+
+.formSection{
+    
+    padding-top: 3%;
+   
+    
+}
+
+.input-group{
+    width:50%;
+}
+
+#SubmitButton{
+    width:50%
+}
+
+.haveAnAccount{
+    width:50%;
+}
+.loginForm{
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
